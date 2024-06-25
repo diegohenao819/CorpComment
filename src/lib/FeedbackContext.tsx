@@ -3,34 +3,33 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { TFeedbackItem } from "./types";
 
-
 // INTERFACE
 interface FeedbackContextType {
-  feedbackItems: TFeedbackItem[]; 
+  feedbackItems: TFeedbackItem[];
   loading: boolean;
   setFeedbackItems: (feedbackItems: TFeedbackItem[]) => void;
   setSelectedCompany: (company: string | null) => void;
   filteredFeedbackItems: TFeedbackItem[];
 }
 
-
-
 // CREATE CONTEXT
 export const FeedbackContext = createContext<FeedbackContextType | undefined>(
   undefined
 );
 
-
 // PROVIDER
 export const FeedbackProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [feedbackItems, setFeedbackItems] = useState<TFeedbackItem[]>([]); 
+  const [feedbackItems, setFeedbackItems] = useState<TFeedbackItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCompany, setSelectedCompany] = useState<string | null>("");
-  
-  
-  const filteredFeedbackItems = selectedCompany ? feedbackItems.filter((feedbackItem) => feedbackItem.company === selectedCompany) : feedbackItems;
+
+  const filteredFeedbackItems = selectedCompany
+    ? feedbackItems.filter(
+        (feedbackItem) => feedbackItem.company === selectedCompany
+      )
+    : feedbackItems;
 
   useEffect(() => {
     setLoading(true);
@@ -46,7 +45,13 @@ export const FeedbackProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <FeedbackContext.Provider
-      value={{ feedbackItems, loading, setFeedbackItems, setSelectedCompany, filteredFeedbackItems }}
+      value={{
+        feedbackItems,
+        loading,
+        setFeedbackItems,
+        setSelectedCompany,
+        filteredFeedbackItems,
+      }}
     >
       {children}
     </FeedbackContext.Provider>
