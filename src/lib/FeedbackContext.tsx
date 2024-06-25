@@ -9,6 +9,8 @@ interface FeedbackContextType {
   feedbackItems: TFeedbackItem[]; 
   loading: boolean;
   setFeedbackItems: (feedbackItems: TFeedbackItem[]) => void;
+  setSelectedCompany: (company: string | null) => void;
+  filteredFeedbackItems: TFeedbackItem[];
 }
 
 
@@ -25,7 +27,10 @@ export const FeedbackProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [feedbackItems, setFeedbackItems] = useState<TFeedbackItem[]>([]); 
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedCompany, setSelectedCompany] = useState<string | null>("");
   
+  
+  const filteredFeedbackItems = selectedCompany ? feedbackItems.filter((feedbackItem) => feedbackItem.company === selectedCompany) : feedbackItems;
 
   useEffect(() => {
     setLoading(true);
@@ -41,7 +46,7 @@ export const FeedbackProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <FeedbackContext.Provider
-      value={{ feedbackItems, loading, setFeedbackItems }}
+      value={{ feedbackItems, loading, setFeedbackItems, setSelectedCompany, filteredFeedbackItems }}
     >
       {children}
     </FeedbackContext.Provider>

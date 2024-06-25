@@ -1,24 +1,20 @@
-import {  useContext } from "react";
+import { useContext } from "react";
+import { FeedbackContext } from "../lib/FeedbackContext";
 import FeedbackItem from "./FeedbackItem";
 import Spinner from "./Spinner";
-import { FeedbackContext } from "../lib/FeedbackContext";
 
 const FeedbackList = () => {
-  const { feedbackItems, loading } = useContext(FeedbackContext) || {};
+  const { loading, filteredFeedbackItems } = useContext(FeedbackContext) || {};
 
-  
+  return (
+    <ol className="feedback-list">
+      {loading ? <Spinner /> : null}
 
-  return <ol className="feedback-list">
-
-    {
-      loading? <Spinner /> : null
-    }
-
-    {
-      feedbackItems?.map((feedbackItem) => (<FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />))
-    }
- 
-  </ol>;
+      {filteredFeedbackItems?.map((feedbackItem) => (
+        <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
+      ))}
+    </ol>
+  );
 };
 
 export default FeedbackList;
