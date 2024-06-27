@@ -1,6 +1,6 @@
 // Create context for feedback
 
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 import { TFeedbackItem } from "./types";
 
 // INTERFACE
@@ -25,11 +25,15 @@ export const FeedbackProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCompany, setSelectedCompany] = useState<string | null>("");
 
-  const filteredFeedbackItems = selectedCompany
-    ? feedbackItems.filter(
-        (feedbackItem) => feedbackItem.company === selectedCompany
-      )
-    : feedbackItems;
+  const filteredFeedbackItems = useMemo(
+    () =>
+      selectedCompany
+        ? feedbackItems.filter(
+            (feedbackItem) => feedbackItem.company === selectedCompany
+          )
+        : feedbackItems,
+    [selectedCompany, feedbackItems]
+  );
 
   useEffect(() => {
     setLoading(true);

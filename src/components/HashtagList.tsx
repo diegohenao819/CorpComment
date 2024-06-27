@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { FeedbackContext } from "../lib/FeedbackContext";
 import { TFeedbackItem } from "../lib/types";
 
@@ -6,12 +6,16 @@ const HashtagList = () => {
   const { feedbackItems, setSelectedCompany } = useContext(FeedbackContext)!;
 
   // Companies for hashtag list
-  const companies = feedbackItems
-    .map((feedbackItem: TFeedbackItem) => feedbackItem.company)
-    .filter(
-      (company: string, index: number, companies: string[]) =>
-        companies.indexOf(company) === index
-    );
+  const companies = useMemo(
+    () =>
+      feedbackItems
+        .map((feedbackItem: TFeedbackItem) => feedbackItem.company)
+        .filter(
+          (company: string, index: number, companies: string[]) =>
+            companies.indexOf(company) === index
+        ),
+    [feedbackItems]
+  );
 
   return (
     <ul className="hashtags">
