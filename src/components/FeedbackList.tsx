@@ -4,7 +4,12 @@ import FeedbackItem from "./FeedbackItem";
 import Spinner from "./Spinner";
 
 const FeedbackList = () => {
-  const { loading, filteredFeedbackItems } = useContext(FeedbackContext) || {};
+  const {
+    loading,
+    filteredFeedbackItems,
+    selectedCompany,
+    setSelectedCompany,
+  } = useContext(FeedbackContext)!;
 
   return (
     <ol className="feedback-list">
@@ -13,6 +18,12 @@ const FeedbackList = () => {
       {filteredFeedbackItems?.map((feedbackItem) => (
         <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
       ))}
+
+      {selectedCompany ? (
+        <button className="button" onClick={() => setSelectedCompany("")}>
+          Clear
+        </button>
+      ) : null}
     </ol>
   );
 };

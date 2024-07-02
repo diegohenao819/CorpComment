@@ -5,6 +5,8 @@ import { TFeedbackItem } from "../lib/types";
 
 const FeedbackForm = () => {
   const [text, setText] = useState("");
+  const [validForm, setValidForm] = useState(false)
+  const [invalidForm, setInvalidForm] = useState(false)
   const numberCharacters = MAX_CHARACTERS - text.length;
   const { feedbackItems, setFeedbackItems } = useContext(FeedbackContext)!;
 
@@ -13,6 +15,20 @@ const FeedbackForm = () => {
     if (!text) {
       return;
     }
+
+
+    if(text.includes("#") && text.length > 5) {
+      setValidForm(true)
+
+      setTimeout(() => setValidForm(false), 5000)
+
+    }else{
+      setInvalidForm(true)
+      setTimeout(() => setInvalidForm(false), 5000)
+      return
+    }
+
+
     const company = text.match(/#\w+/)?.[0].slice(1);
     const firstLetter = company?.charAt(0).toUpperCase();
 
@@ -40,7 +56,9 @@ const FeedbackForm = () => {
   };
 
   return (
-    <form className="form" onSubmit={(e) => handleSubmit(e)}>
+    <form className={`form ${validForm ? "form--valid" : ""} ${invalidForm ? "form--invalid" : ""}`}
+    
+    onSubmit={(e) => handleSubmit(e)}>
       <textarea
         id="feedback-textarea"
         placeholder="asdf"

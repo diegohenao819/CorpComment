@@ -14,6 +14,19 @@ ol {
   list-style: none;
 }
 
+.button {
+  background-color: #469ed9;
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  height: 50px;
+  width: 90px;
+  margin-left: 50%;
+
+}
+
 a {
   color: inherit;
   text-decoration: initial;

@@ -10,6 +10,7 @@ interface FeedbackContextType {
   setFeedbackItems: (feedbackItems: TFeedbackItem[]) => void;
   setSelectedCompany: (company: string | null) => void;
   filteredFeedbackItems: TFeedbackItem[];
+  selectedCompany: string | null;
 }
 
 // CREATE CONTEXT
@@ -53,6 +54,7 @@ export const FeedbackProvider: React.FC<{ children: ReactNode }> = ({
         feedbackItems,
         loading,
         setFeedbackItems,
+        selectedCompany,
         setSelectedCompany,
         filteredFeedbackItems,
       }}
